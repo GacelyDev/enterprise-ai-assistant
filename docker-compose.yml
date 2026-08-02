@@ -11,6 +11,7 @@ services:
     environment:
       - IS_PERSISTENT=TRUE
       - ANONYMIZED_TELEMETRY=False
+
   data_ingestor:
     build:
       context: .
@@ -25,5 +26,30 @@ services:
       - huggingface_cache:/root/.cache/huggingface
     command: python src/run_data_pipeline.py
 
+  ollama_server:
+    image: ollama/ollama:latest
+    container_name: ollama_llm
+    ports:
+      - "11434:11434"
+    volumes:
+      - ./data/ollama:/root/.ollama
+
+  rag_console:
+    build:
+      context: .
+      dockerfile: docker/rag/Dockerfile
+    container_name: rag_console_app
+    depends_on:
+      - vector_db
+      - ollama_server
+    env_file:
+      - .env
+    volumes:
+      - ./data/rag:/app/data
+      - huggingface_cache:/root/.cache/huggingface
+    command: python src/run_rag_console.py
+    stdin_open: true
+    tty: true
+    
 volumes:
   huggingface_cache:

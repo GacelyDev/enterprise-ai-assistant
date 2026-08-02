@@ -10,5 +10,6 @@ python-dotenv>=1.2.2
 # --- Vector Database and Embeddings ---
 langchain-huggingface>=0.0.3
 langchain-text-splitters>=0.2.0
+langchain-chroma>=0.1.2
 chromadb>=0.5.3
 sentence-transformers>=3.0.0
