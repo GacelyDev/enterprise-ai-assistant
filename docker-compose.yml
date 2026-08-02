@@ -1,13 +1,29 @@
 version: '3.8'
 
 services:
+  vector_db:
+    image: chromadb/chroma:latest
+    container_name: vector_db_chroma
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data/chroma_db:/data
+    environment:
+      - IS_PERSISTENT=TRUE
+      - ANONYMIZED_TELEMETRY=False
   data_ingestor:
     build:
       context: .
       dockerfile: docker/scraper/Dockerfile
     container_name: data_ingestor_job
+    depends_on:
+      - vector_db
     env_file:
       - .env
     volumes:
       - ./data:/app/data
+      - huggingface_cache:/root/.cache/huggingface
     command: python src/run_data_pipeline.py
+
+volumes:
+  huggingface_cache:

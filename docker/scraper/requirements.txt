@@ -1,8 +1,14 @@
-# --- Web Scraping y Procesamiento de Texto ---
+# --- Web scraping and text processing ---
 requests>=2.32.4
 beautifulsoup4>=4.13.5
 curl_cffi>=0.15.0
 playwright>=1.62.0
 
-# --- Utilidades ---
+# --- Utilities ---
 python-dotenv>=1.2.2
+
+# --- Vector Database and Embeddings ---
+langchain-huggingface>=0.0.3
+langchain-text-splitters>=0.2.0
+chromadb>=0.5.3
+sentence-transformers>=3.0.0
