@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   vector_db:
     image: chromadb/chroma:latest
@@ -17,6 +15,8 @@ services:
       context: .
       dockerfile: docker/scraper/Dockerfile
     container_name: data_ingestor_job
+    profiles:
+      - tools
     depends_on:
       - vector_db
     env_file:
@@ -50,6 +50,22 @@ services:
     command: python src/run_rag_console.py
     stdin_open: true
     tty: true
+
+  rag_analytics:
+    build:
+      context: .
+      dockerfile: docker/rag/Dockerfile
+    container_name: rag_analytics_job
+    profiles:
+      - tools
+    depends_on:
+      - ollama_server
+    env_file:
+      - .env
+    volumes:
+      - ./data/rag:/app/data
+      - huggingface_cache:/root/.cache/huggingface
+    command: python -m src.run_analytics
     
 volumes:
   huggingface_cache:
