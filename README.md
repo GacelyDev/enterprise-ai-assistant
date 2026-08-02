@@ -74,7 +74,7 @@ To ensure smooth initialization of the vector database, the local LLM server, an
     ```
 2. Download the LLM Model: Because the Ollama container starts empty, you must manually pull the required language model before executing queries:
     ```bash
-    docker compose up -d vector_db ollama_server
+    docker exec -it ollama_llm ollama pull phi3
     ```
 3. Run the Data Ingestor Pipeline: Execute the scraping and data ingestion pipeline to populate the vector database with financial documents:
     ```bash
