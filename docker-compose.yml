@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  data_ingestor:
+    build:
+      context: .
+      dockerfile: docker/scraper/Dockerfile
+    container_name: data_ingestor_job
+    env_file:
+      - .env
+    volumes:
+      - ./data:/app/data
+    command: python src/run_data_pipeline.py

@@ -1,0 +1,8 @@
+# --- Web Scraping y Procesamiento de Texto ---
+requests>=2.32.4
+beautifulsoup4>=4.13.5
+curl_cffi>=0.15.0
+playwright>=1.62.0
+
+# --- Utilidades ---
+python-dotenv>=1.2.2
